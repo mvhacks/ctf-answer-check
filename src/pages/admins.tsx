@@ -1,7 +1,7 @@
 import { type GetServerSidePropsContext, type NextPage } from "next";
 import { getServerSession } from "next-auth";
 import Link from "next/link";
-import CtfAnswers from "~/components/CtfAnswers";
+import AdminsEdit from "~/components/AdminsEdit";
 import { authOptions } from "~/server/auth";
 import { isAdmin } from "~/utils/admin";
 
@@ -11,13 +11,13 @@ const Home: NextPage = () => {
       <header className="flex w-full items-center justify-between bg-cyan-500 bg-opacity-75 p-4">
         <h1 className="text-lg">Ctf Answers</h1>
         <Link href="/">
-          <button className="rounded-md bg-gray-100 px-3 py-1 shadow-black duration-150 hover:shadow-md active:translate-y-[2px]">
+          <button className="rounded-md bg-gray-200 p-2 shadow-black duration-150 hover:shadow-md active:translate-y-[2px]">
             Home
           </button>
         </Link>
       </header>
-      <section className="flex h-full w-full flex-col items-center gap-4 pt-8">
-        <CtfAnswers />
+      <section className="flex w-full justify-center pt-8">
+        <AdminsEdit />
       </section>
     </main>
   );

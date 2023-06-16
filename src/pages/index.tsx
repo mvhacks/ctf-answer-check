@@ -11,6 +11,7 @@ const Home: NextPage = () => {
   const names = api.flag.getNames.useQuery();
   const checkFlagMutation = api.flag.checkFlag.useMutation();
   const participantData = api.participants.getData.useQuery();
+  const userIsAdmin = api.user.isAdmin.useQuery();
 
   type AnswerState = "Correct" | "Incorrect" | null;
   const [currentChallengeName, setCurrentChallengeName] = useState<
@@ -64,24 +65,31 @@ const Home: NextPage = () => {
           <div className="flex gap-2">
             {session.data !== null ? (
               <button
-                className="rounded-md bg-gray-200 p-2 shadow-black duration-150 hover:shadow-md active:translate-y-[2px]"
+                className="rounded-md bg-gray-100 px-3 py-1 shadow-black duration-150 hover:shadow-md active:translate-y-[2px]"
                 onClick={() => void signOut()}
               >
-                Sign out
+                Sign Out
               </button>
             ) : (
               <button
-                className="rounded-md bg-gray-200 p-2 shadow-black duration-150 hover:shadow-md active:translate-y-[2px]"
+                className="rounded-md bg-gray-100 px-3 py-1 shadow-black duration-150 hover:shadow-md active:translate-y-[2px]"
                 onClick={() => void signIn()}
               >
-                Sign in
+                Sign In
               </button>
             )}
             <Link href="/check">
-              <button className="rounded-md bg-gray-200 p-2 shadow-black duration-150 hover:shadow-md active:translate-y-[2px]">
-                Check answers
+              <button className="rounded-md bg-gray-100 px-3 py-1 shadow-black duration-150 hover:shadow-md active:translate-y-[2px]">
+                Check Answers
               </button>
             </Link>
+            {userIsAdmin.data && (
+              <Link href="/admins">
+                <button className="rounded-md bg-gray-100 px-3 py-1 shadow-black duration-150 hover:shadow-md active:translate-y-[2px]">
+                  Edit Admins
+                </button>
+              </Link>
+            )}
           </div>
         </header>
         <section className="flex h-full w-full flex-col items-center justify-start gap-10 pt-12">
@@ -110,7 +118,7 @@ const Home: NextPage = () => {
               <h1 className="text-xl">Check</h1>
               <div className="flex gap-2">
                 <select
-                  className="cursor-pointer rounded-md bg-gray-200 p-2 shadow-black duration-150 hover:shadow-md active:translate-y-[2px]"
+                  className="cursor-pointer rounded-md bg-gray-100 p-2 shadow-black duration-150 hover:shadow-md active:translate-y-[2px]"
                   value={currentChallengeName}
                   onChange={changeChallenge}
                 >
@@ -129,7 +137,7 @@ const Home: NextPage = () => {
                   onChange={changeFlagValue}
                 />
                 <button
-                  className="rounded-md bg-gray-200 p-2 shadow-black duration-150 hover:shadow-md active:translate-y-[2px]"
+                  className="rounded-md bg-gray-100 px-3 py-1 shadow-black duration-150 hover:shadow-md active:translate-y-[2px]"
                   onClick={() => void checkFlag()}
                 >
                   Check
