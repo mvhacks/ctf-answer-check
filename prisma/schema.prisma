@@ -18,6 +18,7 @@ datasource db {
 
 model Participant {
   email     String @id
+  name      String
   completed String // comma seperated
   points    Int
 }

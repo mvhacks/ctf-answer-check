@@ -5,6 +5,7 @@ import Link from "next/link";
 import { api } from "~/utils/api";
 import ctfLinks from "~/data/ctf-links.json";
 import { signIn, signOut, useSession } from "next-auth/react";
+import { prisma } from "~/server/db";
 
 const Home: NextPage = () => {
   const session = useSession();
@@ -84,11 +85,18 @@ const Home: NextPage = () => {
               </button>
             </Link>
             {userIsAdmin.data && (
-              <Link href="/admins">
-                <button className="rounded-md bg-gray-100 px-3 py-1 shadow-black duration-150 hover:shadow-md active:translate-y-[2px]">
-                  Edit Admins
-                </button>
-              </Link>
+              <>
+                <Link href="/admins">
+                  <button className="rounded-md bg-gray-100 px-3 py-1 shadow-black duration-150 hover:shadow-md active:translate-y-[2px]">
+                    Edit Admins
+                  </button>
+                </Link>
+                <Link href="/leaderboard">
+                  <button className="rounded-md bg-gray-100 px-3 py-1 shadow-black duration-150 hover:shadow-md active:translate-y-[2px]">
+                    Leaderboard
+                  </button>
+                </Link>
+              </>
             )}
           </div>
         </header>
