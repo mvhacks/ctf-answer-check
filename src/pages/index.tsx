@@ -4,8 +4,7 @@ import Head from "next/head";
 import Link from "next/link";
 import { api } from "~/utils/api";
 import ctfLinks from "~/data/ctf-links.json";
-import { useSession } from "next-auth/react";
-import { prisma } from "~/server/db";
+import { signIn, signOut, useSession } from "next-auth/react";
 
 const Home: NextPage = () => {
   const session = useSession();
@@ -62,11 +61,28 @@ const Home: NextPage = () => {
       <main className="flex h-screen flex-col">
         <header className="flex w-full items-center justify-between bg-cyan-500 bg-opacity-75 p-4">
           <h1 className="text-xl">Ctf Answer Check</h1>
-          <Link href="/check">
-            <button className="rounded-md bg-gray-200 p-2 shadow-black duration-150 hover:shadow-md active:translate-y-[2px]">
-              Check answers
-            </button>
-          </Link>
+          <div className="flex gap-2">
+            {session.data !== null ? (
+              <button
+                className="rounded-md bg-gray-200 p-2 shadow-black duration-150 hover:shadow-md active:translate-y-[2px]"
+                onClick={() => void signOut()}
+              >
+                Sign out
+              </button>
+            ) : (
+              <button
+                className="rounded-md bg-gray-200 p-2 shadow-black duration-150 hover:shadow-md active:translate-y-[2px]"
+                onClick={() => void signIn()}
+              >
+                Sign in
+              </button>
+            )}
+            <Link href="/check">
+              <button className="rounded-md bg-gray-200 p-2 shadow-black duration-150 hover:shadow-md active:translate-y-[2px]">
+                Check answers
+              </button>
+            </Link>
+          </div>
         </header>
         <section className="flex h-full w-full flex-col items-center justify-start gap-10 pt-12">
           <div>

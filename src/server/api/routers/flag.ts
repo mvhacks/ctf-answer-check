@@ -1,4 +1,4 @@
-import { CtfChallenge } from "@prisma/client";
+import { type CtfChallenge } from "@prisma/client";
 import { z } from "zod";
 import {
   adminProcedure,
