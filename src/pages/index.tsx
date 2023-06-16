@@ -131,7 +131,7 @@ const Home: NextPage = () => {
                     ))}
                 </select>
                 <input
-                  className="rounded-md border-2 border-gray-500 p-1 shadow-black duration-150 focus:shadow-md"
+                  className="flex-1 rounded-md border-[1.5px] border-gray-200 p-1 outline-none duration-150 focus:border-gray-400"
                   placeholder="Enter flag"
                   value={flagValue}
                   onChange={changeFlagValue}
