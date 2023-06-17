@@ -6,6 +6,7 @@ const EditCtfs = () => {
   const dbCtfs = api.ctfs.getAll.useQuery();
   const deleteCtfMutation = api.ctfs.deleteCtf.useMutation();
   const updateCtfMutation = api.ctfs.updateCtf.useMutation();
+  const addCtfMutation = api.ctfs.addCtf.useMutation();
   const [adding, setAdding] = useState(false);
   const [ctfs, setCtfs] = useState<CtfChallenge[]>([]);
   const [editingId, setEditingId] = useState<string>("");
@@ -16,7 +17,9 @@ const EditCtfs = () => {
     flag: "",
     points: 0,
   };
-  const [newCtf, setNewCtf] = useState<CtfChallenge>({ ...defaultCtfValue });
+  const [newCtf, setNewCtf] = useState<CtfChallenge>({
+    ...defaultCtfValue,
+  });
 
   useEffect(() => {
     if (dbCtfs.data) {
@@ -47,7 +50,12 @@ const EditCtfs = () => {
   };
 
   const handleAddCtf = () => {
-    console.log("adding", newCtf);
+    const newChallenge = { ...newCtf };
+    newChallenge.id = crypto.randomUUID();
+    addCtfMutation.mutate({ ...newChallenge });
+    setNewCtf({ ...defaultCtfValue });
+    setAdding(false);
+    setCtfs((prev) => [...prev, { ...newChallenge }]);
   };
 
   const setEditing = (id: string) => {
@@ -184,19 +192,19 @@ const EditCtfs = () => {
             />
             <input
               className="w-full rounded-md border-[1.5px] border-gray-200 p-1 outline-none duration-150 focus:border-gray-400"
-              placeholder="Ctf Name"
+              placeholder="Ctf Link"
               value={newCtf.link}
               onChange={(e) => updateNewCtfValue("link", e.currentTarget.value)}
             />
             <input
               className="w-full rounded-md border-[1.5px] border-gray-200 p-1 outline-none duration-150 focus:border-gray-400"
-              placeholder="Ctf Name"
+              placeholder="Ctf Flag"
               value={newCtf.flag}
               onChange={(e) => updateNewCtfValue("flag", e.currentTarget.value)}
             />
             <input
               className="w-full rounded-md border-[1.5px] border-gray-200 p-1 outline-none duration-150 focus:border-gray-400"
-              placeholder="Ctf Name"
+              placeholder="Ctf Points"
               type="number"
               value={newCtf.points}
               onChange={(e) =>

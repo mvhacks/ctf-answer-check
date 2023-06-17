@@ -28,17 +28,19 @@ const Home: NextPage = () => {
   }, [participantData.data]);
 
   const checkFlag = async () => {
-    const [correct, points] = await checkFlagMutation.mutateAsync({
-      name: currentChallengeName,
-      value: flagValue,
-    });
-    if (correct === true) {
-      setCurrentAnswer("Correct");
-      setUserPoints((prev) => prev + points);
-    } else if (correct === false) {
-      setCurrentAnswer("Incorrect");
-    } else {
-      setCurrentAnswer(null);
+    if (flagValue.trim().length > 0) {
+      const [correct, points] = await checkFlagMutation.mutateAsync({
+        name: currentChallengeName,
+        value: flagValue,
+      });
+      if (correct === true) {
+        setCurrentAnswer("Correct");
+        setUserPoints((prev) => prev + points);
+      } else if (correct === false) {
+        setCurrentAnswer("Incorrect");
+      } else {
+        setCurrentAnswer(null);
+      }
     }
   };
 

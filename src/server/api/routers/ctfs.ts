@@ -98,4 +98,9 @@ export const ctfRouter = createTRPCRouter({
       return others;
     });
   }),
+  addCtf: adminProcedure.input(ctfSchema).mutation(async ({ ctx, input }) => {
+    return await ctx.prisma.ctfChallenge.create({
+      data: input,
+    });
+  }),
 });
