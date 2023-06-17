@@ -14,7 +14,7 @@ export default function SignIn({
   const logoUrl = "https://authjs.dev/img/providers/";
   return (
     <main className="bg-background flex min-h-screen w-full flex-col items-center gap-24 pt-44">
-      <h1 className="text-3xl">MVHS Orientation Admin</h1>
+      <h1 className="text-3xl">MVHacks CTFs</h1>
       <div className="flex h-full w-full justify-center">
         <section className="bg-primary flex min-w-[350px] flex-col items-center gap-2 rounded-md border-[1px] border-gray-200 bg-opacity-5 p-10 pt-6">
           <h1 className="mb-2 text-2xl">Sign In</h1>
