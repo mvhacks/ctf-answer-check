@@ -1,4 +1,4 @@
-import { flagRouter } from "~/server/api/routers/flag";
+import { ctfRouter } from "~/server/api/routers/ctfs";
 import { createTRPCRouter } from "~/server/api/trpc";
 import { participantRouter } from "./routers/participants";
 import { userRouter } from "./routers/user";
@@ -9,7 +9,7 @@ import { userRouter } from "./routers/user";
  * All routers added in /api/routers should be manually added here.
  */
 export const appRouter = createTRPCRouter({
-  flag: flagRouter,
+  ctfs: ctfRouter,
   participants: participantRouter,
   user: userRouter,
 });

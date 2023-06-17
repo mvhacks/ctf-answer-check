@@ -5,9 +5,16 @@ import {
   createTRPCRouter,
   protectedProcedure,
 } from "~/server/api/trpc";
-import { prisma } from "~/server/db";
 
-export const flagRouter = createTRPCRouter({
+const ctfSchema = z.object({
+  id: z.string(),
+  name: z.string(),
+  link: z.string(),
+  flag: z.string(),
+  points: z.number(),
+});
+
+export const ctfRouter = createTRPCRouter({
   getNames: protectedProcedure.query(async ({ ctx }) => {
     const challenges = await ctx.prisma.ctfChallenge.findMany();
     return challenges.map((item) => item.name);
@@ -32,7 +39,7 @@ export const flagRouter = createTRPCRouter({
 
         if (!email) return [false, 0] as const;
 
-        const participantData = await prisma.participant.findFirst({
+        const participantData = await ctx.prisma.participant.findFirst({
           where: {
             email,
           },
@@ -49,7 +56,7 @@ export const flagRouter = createTRPCRouter({
           participantData.completed +
           `${completed.length > 0 ? "," : ""}${correctChallenge.name}`;
 
-        await prisma.participant.update({
+        await ctx.prisma.participant.update({
           where: {
             email,
           },
@@ -62,8 +69,33 @@ export const flagRouter = createTRPCRouter({
       }
       return [false, 0] as const;
     }),
-  getAnswers: adminProcedure.query(async ({ ctx }) => {
+  getAll: adminProcedure.query(async ({ ctx }) => {
+    return await ctx.prisma.ctfChallenge.findMany();
+  }),
+  deleteCtf: adminProcedure
+    .input(z.string())
+    .mutation(async ({ ctx, input }) => {
+      return await ctx.prisma.ctfChallenge.delete({
+        where: {
+          id: input,
+        },
+      });
+    }),
+  updateCtf: adminProcedure
+    .input(ctfSchema)
+    .mutation(async ({ ctx, input }) => {
+      return await ctx.prisma.ctfChallenge.update({
+        where: {
+          id: input.id,
+        },
+        data: input,
+      });
+    }),
+  getLinks: protectedProcedure.query(async ({ ctx }) => {
     const challenges = await ctx.prisma.ctfChallenge.findMany();
-    return challenges;
+    return challenges.map((item) => {
+      const { flag, ...others } = item;
+      return others;
+    });
   }),
 });

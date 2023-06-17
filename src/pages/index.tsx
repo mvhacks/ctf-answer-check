@@ -3,16 +3,15 @@ import { type NextPage } from "next";
 import Head from "next/head";
 import Link from "next/link";
 import { api } from "~/utils/api";
-import ctfLinks from "~/data/ctf-links.json";
 import { signIn, signOut, useSession } from "next-auth/react";
-import { prisma } from "~/server/db";
 
 const Home: NextPage = () => {
   const session = useSession();
-  const names = api.flag.getNames.useQuery();
-  const checkFlagMutation = api.flag.checkFlag.useMutation();
+  const names = api.ctfs.getNames.useQuery();
+  const checkFlagMutation = api.ctfs.checkFlag.useMutation();
   const participantData = api.participants.getData.useQuery();
   const userIsAdmin = api.user.isAdmin.useQuery();
+  const links = api.ctfs.getLinks.useQuery();
 
   type AnswerState = "Correct" | "Incorrect" | null;
   const [currentChallengeName, setCurrentChallengeName] = useState<
@@ -79,13 +78,13 @@ const Home: NextPage = () => {
                 Sign In
               </button>
             )}
-            <Link href="/check">
-              <button className="rounded-md bg-gray-100 px-3 py-1 shadow-black duration-150 hover:shadow-md active:translate-y-[2px]">
-                Check Answers
-              </button>
-            </Link>
             {userIsAdmin.data && (
               <>
+                <Link href="/check">
+                  <button className="rounded-md bg-gray-100 px-3 py-1 shadow-black duration-150 hover:shadow-md active:translate-y-[2px]">
+                    Check Answers
+                  </button>
+                </Link>
                 <Link href="/admins">
                   <button className="rounded-md bg-gray-100 px-3 py-1 shadow-black duration-150 hover:shadow-md active:translate-y-[2px]">
                     Edit Admins
@@ -94,6 +93,11 @@ const Home: NextPage = () => {
                 <Link href="/leaderboard">
                   <button className="rounded-md bg-gray-100 px-3 py-1 shadow-black duration-150 hover:shadow-md active:translate-y-[2px]">
                     Leaderboard
+                  </button>
+                </Link>
+                <Link href="/edit-ctfs">
+                  <button className="rounded-md bg-gray-100 px-3 py-1 shadow-black duration-150 hover:shadow-md active:translate-y-[2px]">
+                    Edit Ctfs
                   </button>
                 </Link>
               </>
@@ -109,18 +113,19 @@ const Home: NextPage = () => {
             </h1>
             <p>Points: {userPoints}</p>
           </div>
-          <div className="flex gap-10">
-            <div className="flex h-fit flex-col gap-2 rounded-md border-[1px] border-gray-400 p-4">
+          <div className="flex flex-wrap justify-center gap-10">
+            <div className="flex h-fit min-w-[300px] flex-col gap-2 rounded-md border-[1px] border-gray-400 p-4">
               <h1 className="text-xl">Ctf Links</h1>
-              {ctfLinks.map((link, index) => (
-                <Link
-                  href={link.link}
-                  key={`link-${index}`}
-                  className="text-blue-800 duration-75 hover:text-blue-500"
-                >
-                  {link.name}
-                </Link>
-              ))}
+              {links.data &&
+                links.data.map((link, index) => (
+                  <Link
+                    href={link.link}
+                    key={`link-${index}`}
+                    className="text-blue-800 duration-75 hover:text-blue-500"
+                  >
+                    ({link.points}) {link.name}
+                  </Link>
+                ))}
             </div>
             <div className="flex h-fit flex-col gap-2 rounded-md border-[1px] border-gray-400 p-4">
               <h1 className="text-xl">Check</h1>

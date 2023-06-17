@@ -30,6 +30,7 @@ model Admin {
 model CtfChallenge {
   id     String @id @default(cuid())
   name   String
+  link   String
   flag   String
   points Int
 }

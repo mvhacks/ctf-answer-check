@@ -1,7 +1,7 @@
 import { api } from "~/utils/api";
 
 const CtfAnswers = () => {
-  const answers = api.flag.getAnswers.useQuery();
+  const answers = api.ctfs.getAll.useQuery();
 
   return (
     <div className="flex flex-col gap-4">
