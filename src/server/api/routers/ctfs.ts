@@ -28,7 +28,7 @@ export const ctfRouter = createTRPCRouter({
       for (let i = 0; i < challenges.length; i++) {
         const challenge = challenges[i];
         if (!challenge) continue;
-        if (challenge.name === input.name) {
+        if (challenge.name === input.name && challenge.flag == input.value) {
           correctChallenge = challenge;
           break;
         }
