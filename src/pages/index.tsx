@@ -80,11 +80,6 @@ const Home: NextPage = () => {
             )}
             {userIsAdmin.data && (
               <>
-                <Link href="/check">
-                  <button className="rounded-md bg-gray-100 px-3 py-1 shadow-black duration-150 hover:shadow-md active:translate-y-[2px]">
-                    Check Answers
-                  </button>
-                </Link>
                 <Link href="/admins">
                   <button className="rounded-md bg-gray-100 px-3 py-1 shadow-black duration-150 hover:shadow-md active:translate-y-[2px]">
                     Edit Admins
