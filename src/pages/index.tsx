@@ -57,13 +57,16 @@ const Home: NextPage = () => {
   return (
     <>
       <Head>
-        <title>Check answers for ctfs</title>
-        <meta name="description" content="Check answers for ctfs" />
+        <title>MVHacks CTF Event</title>
+        <meta
+          name="description"
+          content="Website for starting and submitting CTFs"
+        />
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <main className="flex h-screen flex-col">
         <header className="flex w-full items-center justify-between bg-cyan-500 bg-opacity-75 p-4">
-          <h1 className="text-xl">Ctf Answer Check</h1>
+          <h1 className="text-xl">MVHacks CTFs</h1>
           <div className="flex gap-2">
             {session.data !== null ? (
               <button
